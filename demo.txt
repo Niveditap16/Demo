@@ -1,64 +1,393 @@
-7/29/26, 2:30 PM -- API(0): Executing the command : im types --user=ext-patilni --port=7001 --hostname=integrity-rail.corp.knorr-bremse.com --
-7/29/26, 2:30 PM -- API(0): org.apache.http.client.ClientProtocolException: No Message
-org.apache.http.client.ClientProtocolException
-	at org.apache.http.impl.client.InternalHttpClient.doExecute(InternalHttpClient.java:186)
-	at org.apache.http.impl.client.CloseableHttpClient.execute(CloseableHttpClient.java:71)
-	at org.apache.http.impl.client.CloseableHttpClient.execute(CloseableHttpClient.java:55)
-	at com.mks.connect.UserApplicationSessionImpl.handleHTTPResponse(UserApplicationSessionImpl.java:226)
-	at com.mks.connect.UserApplicationSessionImpl.getSession(UserApplicationSessionImpl.java:261)
-	at com.mks.connect.UserApplicationSessionImpl.getSessionURI(UserApplicationSessionImpl.java:338)
-	at com.mks.connect.HttpCmdRunnerImpl.getSessionURI(HttpCmdRunnerImpl.java:66)
-	at com.mks.connect.HttpBlimpInputStream.getSessionURI(HttpBlimpInputStream.java:131)
-	at com.mks.connect.HttpBlimpInputStream.blimpInitiate(HttpBlimpInputStream.java:158)
-	at com.mks.connect.BlimpInputStream.getInputStream(BlimpInputStream.java:232)
-	at com.mks.connect.BlimpInputStream.readNoEof(BlimpInputStream.java:710)
-	at com.mks.connect.BlimpInputStream.handleNextBlimpCommand(BlimpInputStream.java:275)
-	at com.mks.connect.BlimpInputStream.read(BlimpInputStream.java:199)
-	at java.base/sun.nio.cs.StreamDecoder.readBytes(StreamDecoder.java:350)
-	at java.base/sun.nio.cs.StreamDecoder.implRead(StreamDecoder.java:393)
-	at java.base/sun.nio.cs.StreamDecoder.lockedRead(StreamDecoder.java:217)
-	at java.base/sun.nio.cs.StreamDecoder.read(StreamDecoder.java:171)
-	at java.base/java.io.InputStreamReader.read(InputStreamReader.java:188)
-	at org.xmlpull.mxp1.MXParser.fillBuf(MXParser.java:2879)
-	at org.xmlpull.mxp1.MXParser.more(MXParser.java:2900)
-	at org.xmlpull.mxp1.MXParser.parseProlog(MXParser.java:1366)
-	at org.xmlpull.mxp1.MXParser.nextImpl(MXParser.java:1351)
-	at org.xmlpull.mxp1.MXParser.next(MXParser.java:1061)
-	at com.mks.api.response.impl.XMLResponseHandler.getResponse(XMLResponseHandler.java:165)
-	at com.mks.connect.AbstractCmdRunner.executeCommand(AbstractCmdRunner.java:350)
-	at com.mks.connect.AbstractCmdRunner.executeCommand(AbstractCmdRunner.java:302)
-	at com.mks.connect.AbstractCmdRunner.execute(AbstractCmdRunner.java:487)
-	at com.mapper.util.IntegrityApiClient.listTypeNames(IntegrityApiClient.java:319)
-	at com.mapper.util.IntegrityApiClient.fetchSchema(IntegrityApiClient.java:261)
-	at com.mapper.view.IntegrityExtractionDialog$1.call(IntegrityExtractionDialog.java:126)
-	at com.mapper.view.IntegrityExtractionDialog$1.call(IntegrityExtractionDialog.java:123)
-	at javafx.graphics@21.0.2/javafx.concurrent.Task$TaskCallable.call(Task.java:1399)
-	at java.base/java.util.concurrent.FutureTask.run(FutureTask.java:317)
-	at java.base/java.lang.Thread.run(Thread.java:1583)
-Caused by: org.apache.http.ProtocolException: The server failed to respond with a valid HTTP response
-	at org.apache.http.impl.conn.DefaultHttpResponseParser.parseHead(DefaultHttpResponseParser.java:151)
-	at org.apache.http.impl.conn.DefaultHttpResponseParser.parseHead(DefaultHttpResponseParser.java:57)
-	at org.apache.http.impl.io.AbstractMessageParser.parse(AbstractMessageParser.java:261)
-	at org.apache.http.impl.DefaultBHttpClientConnection.receiveResponseHeader(DefaultBHttpClientConnection.java:165)
-	at org.apache.http.impl.conn.CPoolProxy.receiveResponseHeader(CPoolProxy.java:167)
-	at org.apache.http.protocol.HttpRequestExecutor.doReceiveResponse(HttpRequestExecutor.java:272)
-	at org.apache.http.protocol.HttpRequestExecutor.execute(HttpRequestExecutor.java:124)
-	at org.apache.http.impl.execchain.MainClientExec.execute(MainClientExec.java:271)
-	at org.apache.http.impl.execchain.ProtocolExec.execute(ProtocolExec.java:184)
-	at org.apache.http.impl.execchain.RetryExec.execute(RetryExec.java:88)
-	at org.apache.http.impl.execchain.RedirectExec.execute(RedirectExec.java:110)
-	at org.apache.http.impl.client.InternalHttpClient.doExecute(InternalHttpClient.java:184)
-	... 33 more
-7/29/26, 2:30 PM -- API(0): com.mks.api.response.impl.ApplicationConnectionError: No Message
-com.mks.api.response.impl.ApplicationConnectionError
-	at com.mks.api.response.impl.XMLResponseHandler.getResponse(XMLResponseHandler.java:191)
-	at com.mks.connect.AbstractCmdRunner.executeCommand(AbstractCmdRunner.java:350)
-	at com.mks.connect.AbstractCmdRunner.executeCommand(AbstractCmdRunner.java:302)
-	at com.mks.connect.AbstractCmdRunner.execute(AbstractCmdRunner.java:487)
-	at com.mapper.util.IntegrityApiClient.listTypeNames(IntegrityApiClient.java:319)
-	at com.mapper.util.IntegrityApiClient.fetchSchema(IntegrityApiClient.java:261)
-	at com.mapper.view.IntegrityExtractionDialog$1.call(IntegrityExtractionDialog.java:126)
-	at com.mapper.view.IntegrityExtractionDialog$1.call(IntegrityExtractionDialog.java:123)
-	at javafx.graphics@21.0.2/javafx.concurrent.Task$TaskCallable.call(Task.java:1399)
-	at java.base/java.util.concurrent.FutureTask.run(FutureTask.java:317)
-	at java.base/java.lang.Thread.run(Thread.java:1583)
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.IOException;
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.HashMap;
+import java.util.HashSet;
+import java.util.Iterator;
+import java.util.List;
+import java.util.Map;
+import java.util.Properties;
+import java.util.Set;
+
+import com.fasterxml.jackson.databind.ObjectMapper;
+import com.mks.api.CmdRunner;
+import com.mks.api.Command;
+import com.mks.api.IntegrationPoint;
+import com.mks.api.IntegrationPointFactory;
+import com.mks.api.Option;
+import com.mks.api.Session;
+import com.mks.api.VersionNumber;
+import com.mks.api.response.APIException;
+import com.mks.api.response.Field;
+import com.mks.api.response.Item;
+import com.mks.api.response.ItemList;
+import com.mks.api.response.Response;
+import com.mks.api.response.WorkItem;
+import com.mks.api.response.WorkItemIterator;
+import com.mks.api.util.APIVersion;
+
+public class App {
+
+    public CmdRunner cmdRunner;
+
+    public App(Session session) throws APIException {
+        this.cmdRunner = session.createCmdRunner();
+    }
+
+    public CmdRunner getCmdRunner() {
+        return this.cmdRunner;
+    }
+
+    public static void main(String[] args) throws APIException {
+
+        Properties props = new Properties();
+        try (FileInputStream fis = new FileInputStream("mks.properties")) {
+            props.load(fis);
+
+            IntegrationPointFactory ipf = IntegrationPointFactory.getInstance();
+            IntegrationPoint integrationPoint = ipf.createLocalIntegrationPoint((VersionNumber) APIVersion.API_4_16);
+            integrationPoint.setAutoStartIntegrityClient(true);
+   Session session = integrationPoint.getCommonSession();
+   session.setDefaultHostname(props.getProperty("hostname"));
+   session.setDefaultPort(Integer.parseInt(props.getProperty("port")));
+   session.setDefaultUsername(props.getProperty("username"));
+
+            App app = new App(session);
+
+            List<WorkItem> documentTypes = app.getAllDocumentTypes();
+            Map<String, Set<String>> typettributes = app.getAllAttributes(documentTypes);
+            Set<String> attributenames = new HashSet<>();
+            typettributes.keySet().forEach(key -> attributenames.addAll(typettributes.get(key)));
+
+            Map<String, Map<String, Object>> data = app.getAttributeMetadata(attributenames);
+
+            File file = new File("integrity.json");
+
+            Map<String, List<Map<String, Object>>> datamodel = new HashMap<>();
+            Iterator<String> itr = typettributes.keySet().iterator();
+            while (itr.hasNext()) {
+                String type = itr.next();
+                Set<String> attmap = typettributes.get(type);
+
+                List<Map<String, Object>> typeattlist = new ArrayList<>();
+
+                Iterator<String> attitr = attmap.iterator();
+                while (attitr.hasNext()) {
+                    String att = attitr.next();
+                    typeattlist.add(data.get(att));
+                }
+                datamodel.put(type, typeattlist);
+            }
+
+            ObjectMapper om = new ObjectMapper();
+            om.writeValue(file, datamodel);
+
+            session.release();
+
+        } catch (IOException e) {
+            e.printStackTrace();
+        } catch (APIException e) {
+            System.err.println("unable to initiate connection");
+            System.err.println(e.getMessage());
+        }
+
+    }
+
+    private Map<String, Map<String, Object>> getAttributeMetadata(Set<String> attributenames) throws APIException {
+        Map<String, Map<String, Object>> metadata = new HashMap<>();
+        for (String attributename : attributenames) {
+            Response response = viewfield(attributename);
+            WorkItemIterator wii = response.getWorkItems();
+            while (wii.hasNext()) {
+                WorkItem wi = wii.next();
+
+                Field type = wi.getField("type");
+                Field computation = null;
+                if (wi.contains("computation")) {
+                    computation = wi.getField("computation");
+                }
+                Field richcontent = null;
+                if (wi.contains("richContent")) {
+                    richcontent = wi.getField("richContent");
+                }
+
+                String fname, ftype;
+                List<String> fpicks = null;
+                String fbackedby = null;
+                boolean isrich, iscompuation;
+                boolean ismultivalued = false;
+
+                fname = wi.getId();
+                ftype = type.getValueAsString();
+                if (richcontent != null) {
+                    isrich = richcontent.getBoolean();
+                } else {
+                    isrich = false;
+                }
+                if (computation != null && computation.getValue() != null) {
+                    iscompuation = true;
+                } else {
+                    iscompuation = false;
+                }
+                switch (type.getValueAsString()) {
+                    case "pick":
+                        fpicks = Arrays.asList(wi.getField("picks").getValueAsString().split(","));
+                        ismultivalued = wi.getField("isMultiValued").getBoolean();
+                        break;
+                    case "ibpl":
+                        fpicks = Arrays.asList(wi.getField("picks").getValueAsString().split(","));
+                        ismultivalued = wi.getField("isMultiValued").getBoolean();
+                        break;
+                    case "fva":
+                        String backedbyatt = wi.getField("backedBy").getValueAsString().split("\\.")[1];
+                        fbackedby = backedbyatt;
+                        Set<String> set = new HashSet<>();
+                        set.add(backedbyatt);
+                        Map<String, Map<String, Object>> map = getAttributeMetadata(set);
+                        Map<String, Object> attmetadata = map.get(backedbyatt);
+                        switch ((String) attmetadata.get("type")) {
+                        case "pick":
+                         fpicks = (List<String>) attmetadata.get("fpicks");
+                            ismultivalued = (boolean) attmetadata.get("ismultivalued");
+                            ftype = (String) attmetadata.get("type");
+                            break;
+                        case "ibpl":
+                         fpicks = (List<String>) attmetadata.get("fpicks");
+                            ismultivalued = (boolean) attmetadata.get("ismultivalued");
+                            ftype = (String) attmetadata.get("type");
+                            break;
+                        default:
+                         ftype = (String) attmetadata.get("type");
+                         break;
+                        }
+                        break;
+                    default:
+                        break;
+                }
+                System.out.println(
+                        fname + " " + ftype + " " + iscompuation + " " + isrich + " " + fpicks + " " + ismultivalued + " " + fbackedby);
+                Map<String, Object> row = new HashMap<>();
+                row.put("name", fname);
+                row.put("type", ftype);
+                row.put("iscomputation", iscompuation);
+                row.put("isrich", isrich);
+                row.put("fpicks", fpicks);
+                row.put("ismultivalued", ismultivalued);
+                metadata.put(attributename, row);
+            }
+        }
+        return metadata;
+    }
+
+    private Response viewfield(String attributename) {
+        Command fields = new Command(Command.IM, "viewfield");
+        fields.addOption(new Option("hostname",
+                "integrity-rail.corp.knorr-bremse.com"));
+        fields.addSelection(attributename);
+        Response response = runCommand(fields);
+        return response;
+    }
+
+    private Map<String, Set<String>> getAllAttributes(List<WorkItem> documentTypes) throws APIException {
+        Map<String, Set<String>> typeattributemap = new HashMap<>();
+
+        for (WorkItem type : documentTypes) {
+            Set<String> attributenames = new HashSet<>();
+            Command typeatts = new Command(Command.IM, "viewtype");
+            typeatts.addOption(new Option("hostname",
+                    "integrity-rail.corp.knorr-bremse.com"));
+            typeatts.addOption(new Option("port", Integer.toString(7001)));
+            typeatts.addSelection(type.getField("name").getValueAsString());
+            Response response2 = runCommand(typeatts);
+
+            WorkItemIterator wii = response2.getWorkItems();
+            while (wii.hasNext()) {
+                WorkItem wi = wii.next();
+                Field visible = wi.getField("visibleFields");
+                Field system = wi.getField("systemManagedFields");
+                ItemList attlist = (ItemList) visible.getValue();
+                Iterator<Item> itr = attlist.getItems();
+                while (itr.hasNext()) {
+                    Item item = itr.next();
+                    attributenames.add(item.getId());
+                }
+                ItemList attlist2 = (ItemList) system.getValue();
+                Iterator<Item> itr2 = attlist2.getItems();
+                while (itr2.hasNext()) {
+                    Item item = itr2.next();
+                    attributenames.add(item.getId());
+                }
+            }
+            typeattributemap.put(type.getId(), attributenames);
+        }
+        return typeattributemap;
+    }
+
+    private List<WorkItem> getAllDocumentTypes() throws APIException {
+        Command types = new Command(Command.IM, "types");
+        types.addOption(new Option("hostname",
+                "integrity-rail.corp.knorr-bremse.com"));
+        types.addOption(new Option("port", Integer.toString(7001)));
+        types.addOption(new Option("fields", "name,documentClass"));
+        types.addOption(new Option("fieldsDelim", ","));
+        types.addOption(new Option("batch"));
+        List<WorkItem> documentTypes = new ArrayList<>();
+        Response response = runCommand(types);
+        WorkItemIterator wii = response.getWorkItems();
+        while (wii.hasNext()) {
+            WorkItem wi = wii.next();
+            if (wi.getField("documentClass").getValue().equals("segment")
+                    || wi.getField("documentClass").getValue().equals("node"))
+                documentTypes.add(wi);
+        }
+        return documentTypes;
+    }
+
+    public synchronized Response runCommand(Command cmd) {
+        Response resp = null;
+        try {
+            resp = this.cmdRunner.execute(cmd);
+            return resp;
+        } catch (APIException e) {
+            System.err.println("Errors while executing command");
+            System.err.println(e.getMessage());
+        }
+        return resp;
+    }
+}
+
+
+import java.io.File;
+import java.io.IOException;
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.HashSet;
+import java.util.List;
+import java.util.Map;
+import java.util.Set;
+
+import com.fasterxml.jackson.databind.ObjectMapper;
+import com.jamasoftware.services.restclient.JamaConfig;
+import com.jamasoftware.services.restclient.exception.RestClientException;
+import com.jamasoftware.services.restclient.jamadomain.core.JamaInstance;
+import com.jamasoftware.services.restclient.jamadomain.fields.JamaField;
+import com.jamasoftware.services.restclient.jamadomain.fields.MultiSelectField;
+import com.jamasoftware.services.restclient.jamadomain.fields.PickListField;
+import com.jamasoftware.services.restclient.jamadomain.lazyresources.JamaItemType;
+import com.jamasoftware.services.restclient.jamadomain.lazyresources.PickList;
+import com.jamasoftware.services.restclient.jamadomain.lazyresources.PickListOption;
+
+public class Jama {
+    public static void main(String[] args) {
+        try {
+            JamaConfig jamaConfig = new JamaConfig(true);
+            JamaInstance jamaInstance = new JamaInstance(jamaConfig);
+            List<JamaItemType> types = jamaInstance.getItemTypes();
+            Map<String, Set<Map<String, Object>>> datamodel = new HashMap<>();
+            for (JamaItemType type : types) {
+                Set<Map<String, Object>> fieldset = new HashSet<>();
+                
+                System.out.println(type.getDisplay());
+                List<JamaField> fields = type.getFields();
+                for (JamaField field : fields) {
+                    Map<String, Object> fielddata = getFieldData(field);
+                    fieldset.add(fielddata);
+                }
+
+                Map<String, Object> typeid = new HashMap<>();
+                typeid.put("id", type.getId());
+                fieldset.add(typeid);
+
+                datamodel.put(type.getDisplay(), fieldset);
+            }
+            wirtetoJson(datamodel);
+        } catch (RestClientException e) {
+            e.printStackTrace();
+        }
+    }
+
+ private static void wirtetoJson(Map<String, Set<Map<String, Object>>> datamodel) {
+  ObjectMapper om = new ObjectMapper();
+        File file = new File("jama.json");
+        try {
+            om.writeValue(file, datamodel);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+ }
+    
+    private static Map<String, Object> getFieldData(JamaField field) throws RestClientException {
+     Map<String, Object> fielddata = new HashMap<>();
+     fielddata.put("Name", field.getLabel());
+     fielddata.put("Type", field.type);
+     switch (field.getClass().getName()) {
+        case "com.jamasoftware.services.restclient.jamadomain.fields.RichTextField":
+            fielddata.put("iscomputation", false);
+            fielddata.put("isrich", true);  
+            fielddata.put("fpicks", null);
+            fielddata.put("ismultivalued", false);
+            break;
+        case "com.jamasoftware.services.restclient.jamadomain.fields.PickListField":
+            fielddata.put("iscomputation", false);
+            fielddata.put("isrich", false);    
+            fielddata.put("fpicks", getpicklistvaluelist(field));
+            fielddata.put("ismultivalued", false);
+            break;
+        case "com.jamasoftware.services.restclient.jamadomain.fields.MultiSelectField":
+            fielddata.put("iscomputation", false);
+            fielddata.put("isrich", false);    
+            fielddata.put("fpicks", getpicklistvaluelist(field));
+            fielddata.put("ismultivalued", true);
+            break;
+        default:
+            fielddata.put("iscomputation", false);
+            fielddata.put("isrich", false);    
+            fielddata.put("fpicks", null);
+            fielddata.put("ismultivalued", false);
+            break;
+     }
+     return fielddata;
+ }
+    
+    private static List<String> getpicklistvaluelist(JamaField field) throws RestClientException {
+        List<String> picklist = new ArrayList<>();
+        PickList list = null;
+        if (field.getClass().getName().equals("com.jamasoftware.services.restclient.jamadomain.fields.PickListField")) {
+            list = ((PickListField) field).getPickList();
+        } else {
+            list = ((MultiSelectField) field).getPickList();
+        }
+
+        List<PickListOption> options = list.getOptions();
+        options.forEach(o -> picklist.add(o.getName()));
+        return picklist;
+    }
+}
+
+       <dependency>
+      <groupId>com.mks.api</groupId>
+      <artifactId>mksapi-jar</artifactId>
+      <version>4.16.2671</version>
+    </dependency>
+   <dependency>
+   <groupId>com.jamasoftware.services</groupId>
+   <artifactId>rest-client</artifactId>
+   <version>1.2.11-SNAPSHOT</version>
+  </dependency>
+
+This repository should be configured in pom.xml to be able to use the com.jamasoftware.services:rest-client:1.2.11-SNAPSHOT
+<repositories>
+    <repository>
+      <id>github</id>
+      <name>GitHub Packages</name>
+      <url>https://maven.pkg.github.com/Groda-SK/JamaRestClient</url>
+      <releases>
+        <enabled>true</enabled>
+      </releases>
+      <snapshots>
+        <enabled>true</enabled>
+      </snapshots>
+    </repository>
+  </repositories>
