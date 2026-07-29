@@ -1,0 +1,61 @@
+O] --------------------------------[ jar ]---------------------------------
+[INFO] 
+[INFO] >>> javafx:0.0.8:run (default-cli) > process-classes @ schema-mapper >>>
+[WARNING] 6 problems were encountered while building the effective model for org.openjfx:javafx-controls:jar:win:21.0.2 during dependency collection step for project (use -X to see details)
+[INFO] 
+[INFO] --- resources:3.4.0:resources (default-resources) @ schema-mapper ---
+[INFO] Copying 2 resources from src\main\resources to target\classes
+[INFO] 
+[INFO] --- compiler:3.13.0:compile (default-compile) @ schema-mapper ---
+[INFO] Recompiling the module because of changed source code.
+[INFO] Compiling 24 source files with javac [debug release 21] to target\classes
+[INFO] /C:/Users/ext-patilni/mappingTool/ALM-Mapping-Tool/src/main/java/com/mapper/util/IntegrityApiClient.java: Some input files use or override a deprecated API.
+[INFO] /C:/Users/ext-patilni/mappingTool/ALM-Mapping-Tool/src/main/java/com/mapper/util/IntegrityApiClient.java: Recompile with -Xlint:deprecation for details.
+[INFO] /C:/Users/ext-patilni/mappingTool/ALM-Mapping-Tool/src/main/java/com/mapper/view/TypeMappingView.java: Some input files use unchecked or unsafe operations.
+[INFO] /C:/Users/ext-patilni/mappingTool/ALM-Mapping-Tool/src/main/java/com/mapper/view/TypeMappingView.java: Recompile with -Xlint:unchecked for details.
+[INFO] 
+[INFO] <<< javafx:0.0.8:run (default-cli) < process-classes @ schema-mapper <<<
+[INFO] 
+[INFO] 
+[INFO] --- javafx:0.0.8:run (default-cli) @ schema-mapper ---
+NOTE: Picked up JDK_JAVA_OPTIONS: --add-modules=java.desktop --add-opens java.base/java.lang=ALL-UNNAMED --add-opens java.desktop/sun.awt=ALL-UNNAMED --add-opens java.desktop/sun.awt.image=ALL-UNNAMED --add-opens java.desktop/java.awt=ALL-UNNAMED
+Picked up JAVA_TOOL_OPTIONS: -Djdk.util.zip.disableZip64ExtraFieldValidation=true
+Picked up _JAVA_OPTIONS: -Xbootclasspath/a:"C:\KBApps\OpenText\UFT-One-2025\bin\java_shared\classes\jasmine.jar"
+Loaded type mappings count: 6
+Loaded field mappings count: 5
+=== Integrity Connection Test ===
+URL      : http://integrity-rail.corp.knorr-bremse.com:7001
+Host     : integrity-rail.corp.knorr-bremse.com
+Port     : 7001
+User     : ext-patilni
+Password : true
+
+=================================================
+PTC INTEGRITY CONNECTION
+=================================================
+Host              : integrity-rail.corp.knorr-bremse.com
+Port              : 7001
+User              : ext-patilni
+Password Provided : true
+API Version       : 4.16
+[STEP 1] Getting IntegrationPointFactory...
+[STEP 1] SUCCESS
+[STEP 2] Creating IntegrationPoint...
+[STEP 2] SUCCESS
+[STEP 3] Disabling AutoStartIntegrityClient...
+[STEP 3] SUCCESS
+[STEP 4] Creating Session...
+[STEP 4] SUCCESS
+=================================================
+INTEGRITY CONNECTION SUCCESSFUL
+=================================================
+[EXTRACT] Creating CmdRunner...
+[EXTRACT] CmdRunner created.
+[EXTRACT] Running 'im types'...
+[EXTRACT FAILED] APIConnectionException
+[INFO] ------------------------------------------------------------------------
+[INFO] BUILD SUCCESS
+[INFO] ------------------------------------------------------------------------
+[INFO] Total time:  31.428 s
+[INFO] Finished at: 2026-07-29T14:02:01+02:00
+[INFO] ------------------------------------------------------------------------
