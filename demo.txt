@@ -1,11 +1,23 @@
-<settings xmlns="http://maven.apache.org/SETTINGS/1.0.0"
-          xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-          xsi:schemaLocation="http://maven.apache.org/SETTINGS/1.0.0 http://maven.apache.org/xsd/settings-1.0.0.xsd">
-  <servers>
-    <server>
-      <id>github</id>
-      <username>YOUR_GITHUB_USERNAME</username>
-      <password>YOUR_GITHUB_PERSONAL_ACCESS_TOKEN</password>
-    </server>
-  </servers>
-</settings>
+vafx:0.0.8:run (default-cli) > process-classes @ schema-mapper >>>
+[WARNING] 6 problems were encountered while building the effective model for org.openjfx:javafx-controls:jar:win:21.0.2 during dependency collection step for project (use -X to see details)
+Downloading from github: https://maven.pkg.github.com/Groda-SK/JamaRestClient/com/jamasoftware/services/rest-client/1.2.11-SNAPSHOT/maven-metadata.xml
+[WARNING] Could not transfer metadata com.jamasoftware.services:rest-client:1.2.11-SNAPSHOT/maven-metadata.xml from/to github (https://maven.pkg.github.com/Groda-SK/JamaRestClient): status code: 401, reason phrase: Unauthorized (401)
+[WARNING] com.jamasoftware.services:rest-client:1.2.11-SNAPSHOT/maven-metadata.xml failed to transfer from https://maven.pkg.github.com/Groda-SK/JamaRestClient during a previous attempt. This failure was cached in the local repository and resolution will not be reattempted until the update interval of github has elapsed or updates are forced. Original error: Could not transfer metadata com.jamasoftware.services:rest-client:1.2.11-SNAPSHOT/maven-metadata.xml from/to github (https://maven.pkg.github.com/Groda-SK/JamaRestClient): status code: 401, reason phrase: Unauthorized (401)
+Downloading from github: https://maven.pkg.github.com/Groda-SK/JamaRestClient/com/jamasoftware/services/rest-client/1.2.11-SNAPSHOT/rest-client-1.2.11-SNAPSHOT.pom
+[INFO] ------------------------------------------------------------------------
+[INFO] BUILD FAILURE
+[INFO] ------------------------------------------------------------------------
+[INFO] Total time:  2.031 s
+[INFO] Finished at: 2026-07-29T16:28:15+02:00
+[INFO] ------------------------------------------------------------------------
+[ERROR] Failed to execute goal on project schema-mapper: Could not collect dependencies for project com.mapper:schema-mapper:jar:1.0-SNAPSHOT
+[ERROR] Failed to read artifact descriptor for com.jamasoftware.services:rest-client:jar:1.2.11-SNAPSHOT
+[ERROR]         Caused by: The following artifacts could not be resolved: com.jamasoftware.services:rest-client:pom:1.2.11-SNAPSHOT (absent): Could not transfer artifact com.jamasoftware.services:rest-client:pom:1.2.11-SNAPSHOT from/to github (https://maven.pkg.github.com/Groda-SK/JamaRestClient): status code: 401, reason phrase: Unauthorized (401)                                                                                              
+[ERROR] 
+[ERROR] -> [Help 1]
+[ERROR] 
+[ERROR] To see the full stack trace of the errors, re-run Maven with the -e switch.
+[ERROR] Re-run Maven using the -X switch to enable full debug logging.
+[ERROR] 
+[ERROR] For more information about the errors and possible solutions, please read the following articles:
+[ERROR] [Help 1] http://cwiki.apache.org/confluence/display/MAVEN/DependencyResolutionException
